@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  database:
+    image: postgres:13.3-alpine
+    init: true
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      PGDATA: /data/postgres
+    ports:
+      - "127.0.0.1:5432:5432"
+  php:
+    #image: php:8.0-cli-alpine3.14
+    build:
+      context: docker/php
+    volumes:
+      - ./:/app/
