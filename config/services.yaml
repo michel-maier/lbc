@@ -1,0 +1,15 @@
+parameters:
+
+services:
+    # core application uses package by component instead package by layer, it's incompatible with autowiring
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/Core/'
+            - '../src/Kernel.php'
+
+    # Core Services
