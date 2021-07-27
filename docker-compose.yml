@@ -15,3 +15,6 @@ services:
       context: docker/php
     volumes:
       - ./:/app/
+      - composer:/.composer
+volumes:
+  composer:
