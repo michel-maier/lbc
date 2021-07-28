@@ -19,11 +19,11 @@ class AdDtoMapper
         );
     }
 
-    public function toDefaultCollection(array $collection): DefaultAdResponse
+    public function toDefaultCollection(array $collection): array
     {
         $dtos = [];
         while($ad = array_pop($collection)) {
-            $dtos = $this->toDefault($ad);
+            $dtos[] = $this->toDefault($ad);
         }
 
         return $dtos;

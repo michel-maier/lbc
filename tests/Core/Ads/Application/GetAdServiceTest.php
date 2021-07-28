@@ -39,10 +39,9 @@ class GetAdServiceTest extends TestCase
         $this->assertEquals($ad->getTitle(), $result->getTitle());
         $this->assertEquals($ad->getContent(), $result->getContent());
         $this->assertEquals($ad->getType(), $result->getType());
-
     }
 
-    public function testIShouldGetAnErrorOnTryingToDeleteAnAddWithAnMalformedUuid()
+    public function testIShouldGetAnErrorOnTryingToGetAnAddWithAnMalformedUuid()
     {
         $this->adRepository
             ->get(Argument::any());
