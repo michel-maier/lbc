@@ -6,18 +6,17 @@ use App\Core\Ads\Application\NewAdRequest;
 use App\Core\Ads\Application\NewAdResponse;
 use App\Core\Ads\Application\NewAdService;
 use App\Core\Ads\Domain\Ad;
-use App\Core\Ads\Domain\CarModel;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use App\Core\DomainException;
-use Iterator;
 use PHPUnit\Framework\TestCase;
 use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Argument;
 
-class AdCreationServiceTest extends TestCase
+class NewAdServiceTest extends TestCase
 {
     use ProphecyTrait;
+    use StubCarModelsTrait;
 
     private $adRepository;
     private $carModelRepository;
@@ -45,12 +44,12 @@ class AdCreationServiceTest extends TestCase
 
         //Assert
         $this->assertInstanceOf(NewAdResponse::class, $result);
-        $this->assertNotNull($expected->getId());
-        $this->assertEquals($req->getTitle(), $expected->getTitle());
-        $this->assertEquals($req->getContent(), $expected->getContent());
-        $this->assertEquals($req->getType(), $expected->getType());
-        $this->assertEquals(null, $expected->getModel());
-        $this->assertEquals(null, $expected->getManufacturer());
+        $this->assertNotNull($result->getId());
+        $this->assertEquals($result->getTitle(), $result->getTitle());
+        $this->assertEquals($result->getContent(), $result->getContent());
+        $this->assertEquals($result->getType(), $result->getType());
+        $this->assertNull($result->getModel());
+        $this->assertNull($result->getManufacturer());
     }
 
     public function provideAdCreationRequest(): array
@@ -101,21 +100,5 @@ class AdCreationServiceTest extends TestCase
         $this->expectExceptionObject(new DomainException('"309" does not match any model'));
 
         ($this->service)($req);
-    }
-
-    private function stubCarModels(): Iterator
-    {
-        foreach(['Cabriolet', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8', 'R8', 'Rs3', 'Rs4', 'Rs5', 'Rs7', 'S3', 'S4', 'S4 Avant', 'S4 Cabriolet', 'S5', 'S7', 'S8', 'SQ5', 'SQ7', 'Tt', 'Tts', 'V8'] as $model)
-        {
-            yield new CarModel($model, 'Audi');
-        }
-        foreach(['M3', 'M4', 'M5', 'M535', 'M6', 'M635', 'Serie 1', 'Serie 2', 'Serie 3', 'Serie 4', 'Serie 5', 'Serie 6', 'Serie 7', 'Serie 8'] as $model)
-        {
-            yield new CarModel($model, 'BMW');
-        }
-        foreach(['C1', 'C15', 'C2', 'C25', 'C25D', 'C25E', 'C25TD', 'C3', 'C3 Aircross', 'C3 Picasso', 'C4', 'C4 Picasso', 'C5', 'C6', 'C8', 'Ds3', 'Ds4', 'Ds5'] as $model)
-        {
-            yield new CarModel($model, 'Citroen');
-        }
     }
 }

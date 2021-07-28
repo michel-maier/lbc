@@ -3,6 +3,7 @@
 namespace App\Core\Ads\Domain;
 
 use App\Core\Ads\Application\NewAdRequest;
+use App\Core\Ads\Application\UpdateAdRequest;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use App\Core\DomainException;
 
@@ -37,20 +38,27 @@ abstract class Ad
 
     public static function createFromNewAutomobileRequest(NewAdRequest $request, CarModelRepositoryInterface $carModelRepository): self
     {
+        $model = self::searchModel($request->getModel(), $carModelRepository);
 
-        foreach(self::sortCarModelsByLengthName($carModelRepository->findAll()) as $model) {
-            if ($model->isMatchingTheSearchString($request->getModel())) {
-                return new AutomobileAd($request->getTitle(), $request->getContent(), $model->getName(), $model->getManufacturer());
-            }
-        }
-
-        throw new DomainException(sprintf('"%s" does not match any model', $request->getModel()));
+        return new AutomobileAd($request->getTitle(), $request->getContent(), $model->getName(), $model->getManufacturer());
     }
 
     private static function validateNewRequest(NewAdRequest $request): void
     {
         $isAnAuthorizedType = in_array($request->getType(), self::ALL_TYPES);
         $isAnAuthorizedType || throw new DomainException('"%s" type is not authorized');
+    }
+
+    private static function searchModel(string $search, CarModelRepositoryInterface $carModelRepository): CarModel
+    {
+        foreach(self::sortCarModelsByLengthName($carModelRepository->findAll()) as $model)
+        {
+            if ($model->isMatchingTheSearchString($search)) {
+                return $model;
+            }
+        }
+
+        throw new DomainException(sprintf('"%s" does not match any model', $search));
     }
 
     private static function sortCarModelsByLengthName($models): array
@@ -60,6 +68,25 @@ abstract class Ad
         });
 
         return $models;
+    }
+
+    public function updateFromUpdateRequest(UpdateAdRequest $request, CarModelRepositoryInterface $carModelRepository): self
+    {
+        $this->title = $request->getTitle() ?? $this->title;
+        $this->content = $request->getContent() ?? $this->content;
+
+        if (self::AUTOMOBILE_TYPE === $this->getType() && null !== $request->getModel()) {
+            return $this->updateFromNewAutomobileRequest($request, $carModelRepository);
+        }
+
+        return $this;
+    }
+
+    public function updateFromNewAutomobileRequest(UpdateAdRequest $request, CarModelRepositoryInterface $carModelRepository): self
+    {
+        $model = $this->searchModel($request->getModel(), $carModelRepository);
+
+        return new AutomobileAd($request->getTitle(), $request->getContent(), $model->getName(), $model->getManufacturer());
     }
 
     public function getId(): AdId

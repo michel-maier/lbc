@@ -8,7 +8,7 @@ trait EntityIdTrait
 
     public function __construct(?string $id = null)
     {
-        null !== $id && !uuid_is_valid($id) && throw new DomainException(sprintf('%s is not a valid uuid', $id));
+        null !== $id && !uuid_is_valid($id) && throw new DomainException(sprintf('"%s" is not a valid uuid', $id));
         $this->id = $id ?? uuid_create(UUID_TYPE_NAME);
     }
 
