@@ -18,17 +18,10 @@ class NewAdService implements NewAdServiceInterface
         $this->carModelRepository = $carModelRepository;
     }
 
-    public function __invoke(NewAdRequest $request): NewAdResponse
+    public function __invoke(NewAdRequest $request): DefaultAdResponse
     {
         $ad = $this->adRepository->add(Ad::createFromNewRequest($request, $this->carModelRepository));
 
-        return new NewAdResponse(
-            $ad->getId(),
-            $ad->getTitle(),
-            $ad->getContent(),
-            $ad->getType(),
-            $ad instanceof AutomobileAd ? $ad->getModel() : null,
-            $ad instanceof AutomobileAd ? $ad->getManufacturer() : null
-        );
+        return (new AdDtoMapper())->toDefault($ad);
     }
 }

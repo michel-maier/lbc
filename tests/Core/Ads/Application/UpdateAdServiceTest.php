@@ -2,8 +2,8 @@
 
 namespace App\Tests\Core\Ads\Application;
 
+use App\Core\Ads\Application\DefaultAdResponse;
 use App\Core\Ads\Application\UpdateAdRequest;
-use App\Core\Ads\Application\UpdateAdResponse;
 use App\Core\Ads\Application\UpdateAdService;
 use App\Core\Ads\Domain\Ad;
 use App\Core\Ads\Domain\AutomobileAd;
@@ -37,7 +37,7 @@ class UpdateAdServiceTest extends TestCase
     /**
      * @dataProvider provideUpdateAdRequest
      */
-    public function testIShouldUpdateGenericAdThenGetResponse(UpdateAdRequest $req, Ad $toUpdate, UpdateAdResponse $expected): void
+    public function testIShouldUpdateGenericAdThenGetResponse(UpdateAdRequest $req, Ad $toUpdate, DefaultAdResponse $expected): void
     {
         //Arrange
         $this->adRepository
@@ -50,7 +50,7 @@ class UpdateAdServiceTest extends TestCase
         $result = ($this->service)($req);
 
         //Assert
-        $this->assertInstanceOf(UpdateAdResponse::class, $result);
+        $this->assertInstanceOf(DefaultAdResponse::class, $result);
         $this->assertNotNull($expected->getId());
         $this->assertEquals($expected->getTitle(), $result->getTitle(),);
         $this->assertEquals($expected->getContent(), $result->getContent(), );
@@ -64,12 +64,12 @@ class UpdateAdServiceTest extends TestCase
             '0 - I should update JobAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content'),
                 new JobAd('to change', 'to change'),
-                new UpdateAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content', Ad::JOB_TYPE)
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content', Ad::JOB_TYPE)
             ],
             '1 - I should update RealEstateAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content'),
                 new RealEstateAd('to change', 'to change'),
-                new UpdateAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content', Ad::REAL_ESTATE_TYPE)
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content', Ad::REAL_ESTATE_TYPE)
             ],
         ];
     }
@@ -77,7 +77,7 @@ class UpdateAdServiceTest extends TestCase
     /**
      * @dataProvider providePartiallyUpdateAdRequest
      */
-    public function testIShouldPartiallyUpdateGenericAdThenGetResponse(UpdateAdRequest $req, Ad $toUpdate, UpdateAdResponse $expected): void
+    public function testIShouldPartiallyUpdateGenericAdThenGetResponse(UpdateAdRequest $req, Ad $toUpdate, DefaultAdResponse $expected): void
     {
         //Arrange
         $this->adRepository
@@ -101,17 +101,17 @@ class UpdateAdServiceTest extends TestCase
             '0 - I should partially update JobAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new job title'),
                 new JobAd('initial', 'initial'),
-                new UpdateAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'initial', Ad::JOB_TYPE),
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'initial', Ad::JOB_TYPE),
             ],
             '1 - I should partially update RealEstateAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new real estate title'),
                 new RealEstateAd('initial', 'initial'),
-                new UpdateAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'initial', Ad::REAL_ESTATE_TYPE),
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'initial', Ad::REAL_ESTATE_TYPE),
             ],
             '1 - I should partially update AutomobileAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new automobile title'),
                 new RealEstateAd('initial', 'initial'),
-                new UpdateAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new automobile title', 'initial', Ad::AUTOMOBILE_TYPE),
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new automobile title', 'initial', Ad::AUTOMOBILE_TYPE),
             ],
         ];
     }

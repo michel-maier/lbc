@@ -2,7 +2,7 @@
 
 namespace App\Core\Ads\Application;
 
-class NewAdResponse
+class DefaultAdResponse
 {
     private string $id;
     private string $title;

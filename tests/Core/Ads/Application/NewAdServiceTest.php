@@ -2,8 +2,8 @@
 
 namespace App\Tests\Core\Ads\Application;
 
+use App\Core\Ads\Application\DefaultAdResponse;
 use App\Core\Ads\Application\NewAdRequest;
-use App\Core\Ads\Application\NewAdResponse;
 use App\Core\Ads\Application\NewAdService;
 use App\Core\Ads\Domain\Ad;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
@@ -33,7 +33,7 @@ class NewAdServiceTest extends TestCase
     /**
      * @dataProvider provideAdCreationRequest
      */
-    public function testIShouldCreateGenericAdThenGetResponse(NewAdRequest $req, NewAdResponse $expected): void
+    public function testIShouldCreateGenericAdThenGetResponse(NewAdRequest $req, DefaultAdResponse $expected): void
     {
         //Arrange
         $this->adRepository
@@ -43,7 +43,7 @@ class NewAdServiceTest extends TestCase
         $result = ($this->service)($req);
 
         //Assert
-        $this->assertInstanceOf(NewAdResponse::class, $result);
+        $this->assertInstanceOf(DefaultAdResponse::class, $result);
         $this->assertNotNull($result->getId());
         $this->assertEquals($result->getTitle(), $result->getTitle());
         $this->assertEquals($result->getContent(), $result->getContent());
@@ -55,8 +55,8 @@ class NewAdServiceTest extends TestCase
     public function provideAdCreationRequest(): array
     {
         return [
-            '0 - I should create JobAd' => [new NewAdRequest('job title', 'job content', Ad::JOB_TYPE), new NewAdResponse('id', 'job title', 'job content', Ad::JOB_TYPE)],
-            '1 - I should create RealEstateAd' => [new NewAdRequest('real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE), new NewAdResponse('id', 'real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE)],
+            '0 - I should create JobAd' => [new NewAdRequest('job title', 'job content', Ad::JOB_TYPE), new DefaultAdResponse('id', 'job title', 'job content', Ad::JOB_TYPE)],
+            '1 - I should create RealEstateAd' => [new NewAdRequest('real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE), new DefaultAdResponse('id', 'real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE)],
         ];
     }
     /**

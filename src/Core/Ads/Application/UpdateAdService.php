@@ -18,18 +18,11 @@ class UpdateAdService implements UpdateAdServiceInterface
         $this->carModelRepository = $carModelRepository;
     }
 
-    public function __invoke(UpdateAdRequest $request): UpdateAdResponse
+    public function __invoke(UpdateAdRequest $request): DefaultAdResponse
     {
         $ad = $this->adRepository->get(new AdId($request->getId()));
         $ad = $this->adRepository->save($ad->updateFromUpdateRequest($request, $this->carModelRepository));
 
-        return new UpdateAdResponse(
-            $ad->getId(),
-            $ad->getTitle(),
-            $ad->getContent(),
-            $ad->getType(),
-            $ad instanceof AutomobileAd ? $ad->getModel() : null,
-            $ad instanceof AutomobileAd ? $ad->getManufacturer() : null
-        );
+        return (new AdDtoMapper())->toDefault($ad);
     }
 }
