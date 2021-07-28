@@ -10,7 +10,7 @@ interface AdRepositoryInterface
     public function get(AdId $id): Ad;
     public function add(Ad $ad): Ad;
     public function save(Ad $ad): Ad;
-    public function remove(Ad $ad): void;
+    public function remove(AdId $id): void;
     /* @return Ad[]*/
     public function findAll(): array;
 }
