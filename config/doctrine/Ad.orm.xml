@@ -1,0 +1,13 @@
+<doctrine-mapping>
+    <entity name="App\Core\Ads\Domain\Ad" table="ads_ad" inheritance-type="JOINED">
+        <embedded name="id" class="App\Core\Ads\Domain\AdId" />
+        <field name="title" type="string"/>
+        <field name="content" type="string"/>
+        <discriminator-column name="discriminant" type="string" />
+        <discriminator-map>
+            <discriminator-mapping value="automobile" class="App\Core\Ads\Domain\AutomobileAd" />
+            <discriminator-mapping value="job" class="App\Core\Ads\Domain\JobAd" />
+            <discriminator-mapping value="real-estate" class="App\Core\Ads\Domain\RealEstateAd" />
+        </discriminator-map>
+    </entity>
+</doctrine-mapping>

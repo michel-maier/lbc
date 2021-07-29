@@ -1,0 +1,4 @@
+<doctrine-mapping>
+    <entity name="App\Core\Ads\Domain\RealEstateAd" table="ads_real_estate_ad" >
+    </entity>
+</doctrine-mapping>

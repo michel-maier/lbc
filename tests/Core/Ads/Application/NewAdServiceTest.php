@@ -6,6 +6,7 @@ use App\Core\Ads\Application\DefaultAdResponse;
 use App\Core\Ads\Application\NewAdRequest;
 use App\Core\Ads\Application\NewAdService;
 use App\Core\Ads\Domain\Ad;
+use App\Core\Ads\Domain\InitializeCarModelsTrait;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use App\Core\DomainException;
@@ -16,7 +17,7 @@ use Prophecy\Argument;
 class NewAdServiceTest extends TestCase
 {
     use ProphecyTrait;
-    use StubCarModelsTrait;
+    use InitializeCarModelsTrait;
 
     private $adRepository;
     private $carModelRepository;
@@ -70,7 +71,7 @@ class NewAdServiceTest extends TestCase
             ->willReturnArgument(0);
         $this->carModelRepository
             ->findAll()
-            ->willReturn(iterator_to_array($this->stubCarModels()));
+            ->willReturn(iterator_to_array($this->getCarModels()));
 
         $result = ($this->service)($req);
 
@@ -95,7 +96,7 @@ class NewAdServiceTest extends TestCase
             ->willReturnArgument(0);
         $this->carModelRepository
             ->findAll()
-            ->willReturn(iterator_to_array($this->stubCarModels()));
+            ->willReturn(iterator_to_array($this->getCarModels()));
 
         $this->expectExceptionObject(new DomainException('"309" does not match any model'));
 

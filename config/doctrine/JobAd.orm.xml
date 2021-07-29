@@ -1,0 +1,4 @@
+<doctrine-mapping>
+    <entity name="App\Core\Ads\Domain\JobAd" table="ads_job_ad" >
+    </entity>
+</doctrine-mapping>

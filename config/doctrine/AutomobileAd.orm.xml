@@ -1,0 +1,6 @@
+<doctrine-mapping>
+    <entity name="App\Core\Ads\Domain\AutomobileAd" table="ads_automobile_ad" >
+        <field name="model" type="string" nullable="false"/>
+        <field name="manufacturer" type="string" nullable="false"/>
+    </entity>
+</doctrine-mapping>

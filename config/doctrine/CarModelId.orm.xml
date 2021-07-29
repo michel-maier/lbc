@@ -1,0 +1,5 @@
+<doctrine-mapping>
+    <embeddable name="App\Core\Ads\Domain\CarModelId">
+        <id name="id" type="uuid" />
+    </embeddable>
+</doctrine-mapping>

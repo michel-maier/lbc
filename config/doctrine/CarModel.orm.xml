@@ -1,0 +1,7 @@
+<doctrine-mapping>
+    <entity name="App\Core\Ads\Domain\CarModel" table="ads_car_model" >
+        <embedded name="id" class="App\Core\Ads\Domain\CarModelId" />
+        <field name="name" type="string" nullable="false"/>
+        <field name="manufacturer" type="string" nullable="false"/>
+    </entity>
+</doctrine-mapping>
