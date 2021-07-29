@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Infrastructure\Exceptions;
+namespace App\Core;
 
 class UniqueConstraintViolationException extends InfrastructureException
 {

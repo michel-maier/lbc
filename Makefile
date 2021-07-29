@@ -10,6 +10,8 @@ up:
 	docker-compose up -d
 stop:
 	docker-compose stop
+down:
+	docker-compose down
 
 #Symfony/Composer
 install:
@@ -17,23 +19,30 @@ install:
 
 #Doctrine
 db-create: up
-	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:database:create --if-not-exists
+	@docker-compose run --rm php bin/console doctrine:database:create --if-not-exists
+db-drop: up
+	@docker-compose run --rm php bin/console doctrine:database:drop --if-exists --force
 db-schema-drop: up
-	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:schema:drop
+	@docker-compose run --rm php bin/console doctrine:schema:drop
 db-migration-diff: up
-	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:migration:diff
+	@docker-compose run --rm php bin/console doctrine:migration:diff
 db-migration-migrate: up
-	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:migrations:migrate --no-interaction
+	@docker-compose run --rm php bin/console doctrine:migrations:migrate --no-interaction
 db-migration-generate: up
 	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:migrations:generate
+db-fixtures: up
+	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:fixtures:load --no-interaction
+db-initialize: up db-drop db-create db-migration-migrate
 
 #Local server
 server-start: up
-	docker-compose run --rm --user="${UID}:${GID}" --publish 127.0.0.1:${DEV_SERVER_PORT}:${DEV_SERVER_PORT} php -S 0.0.0.0:${DEV_SERVER_PORT} -t public
+	docker-compose run --rm --publish 127.0.0.1:${DEV_SERVER_PORT}:${DEV_SERVER_PORT} php -S 0.0.0.0:${DEV_SERVER_PORT} -t public
 
 #Test
-test:
-	@docker-compose run --rm php simple-phpunit
+test-core:
+	@docker-compose run --rm php simple-phpunit tests/Core
+test-func: up
+	@docker-compose run --rm -e INIT_DB=1 php simple-phpunit tests/Controller
 
 #Shell
 sh:
