@@ -2,15 +2,15 @@
 
 namespace App\Infrastructure\Ads;
 
-use App\Core\Ads\Domain\Ad;
 use App\Core\Ads\Domain\CarModel;
 use App\Core\Ads\Domain\CarModelId;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Infrastructure as Infrastructure;
+use App\Infrastructure\Exceptions as Infrastructure;
+use Doctrine\ORM\EntityRepository;
 
-class CarModelRepositoryAdapter implements CarModelRepositoryInterface
+class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
 {
     protected EntityRepository $repository;
     protected EntityManagerInterface $entityManager;
@@ -22,13 +22,13 @@ class CarModelRepositoryAdapter implements CarModelRepositoryInterface
     }
     public function get(CarModelId $id): CarModel
     {
-        $ad = $this->repository->findOneBy(['id' => $id]);
+        $carModel = $this->repository->find($id);
 
-        if (null === $ad) {
+        if (null === $carModel) {
             throw new Infrastructure\NotFoundException();
         }
 
-        return $ad;
+        return $carModel;
     }
 
     public function add(CarModel $carModel): CarModel
@@ -36,7 +36,7 @@ class CarModelRepositoryAdapter implements CarModelRepositoryInterface
         return $this->save($carModel);
     }
 
-    public function save(Ad $carModel): CarModel
+    public function save(CarModel $carModel): CarModel
     {
         try {
             $this->entityManager->persist($carModel);
@@ -51,10 +51,11 @@ class CarModelRepositoryAdapter implements CarModelRepositoryInterface
     public function remove(CarModelId $id): void
     {
         $this->entityManager->remove($this->get($id));
+        $this->entityManager->flush();
     }
 
     public function findAll(): array
     {
-       $this->repository->findAll();
+       return $this->repository->findAll();
     }
 }

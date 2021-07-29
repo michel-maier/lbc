@@ -7,9 +7,10 @@ use App\Core\Ads\Domain\AdId;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Infrastructure as Infrastructure;
+use App\Infrastructure\Exceptions as Infrastructure;
+use Doctrine\ORM\EntityRepository;
 
-class AdRepositoryAdapter implements AdRepositoryInterface
+class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
 {
     protected EntityRepository $repository;
     protected EntityManagerInterface $entityManager;
@@ -21,7 +22,7 @@ class AdRepositoryAdapter implements AdRepositoryInterface
     }
     public function get(AdId $id): Ad
     {
-        $ad = $this->repository->findOneBy(['id' => $id]);
+        $ad = $this->repository->find($id);
 
         if (null === $ad) {
             throw new Infrastructure\NotFoundException();
@@ -50,10 +51,11 @@ class AdRepositoryAdapter implements AdRepositoryInterface
     public function remove(AdId $id): void
     {
         $this->entityManager->remove($this->get($id));
+        $this->entityManager->flush();
     }
 
     public function findAll(): array
     {
-       $this->repository->findAll();
+       return $this->repository->findAll();
     }
 }

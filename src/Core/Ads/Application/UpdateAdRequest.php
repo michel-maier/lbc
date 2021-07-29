@@ -9,7 +9,7 @@ class UpdateAdRequest
     private ?string $content;
     private ?string $model;
 
-    public function __construct(?string $id = null, ?string $title = null, ?string $content = null, ?string $model = null)
+    public function __construct(string $id = null, ?string $title = null, ?string $content = null, ?string $model = null)
     {
         $this->id = $id;
         $this->title = $title;

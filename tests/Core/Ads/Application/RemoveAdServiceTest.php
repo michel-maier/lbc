@@ -4,6 +4,7 @@ namespace App\Tests\Core\Ads\Application;
 
 use App\Core\Ads\Application\RemoveAdResponse;
 use App\Core\Ads\Application\RemoveAdService;
+use App\Core\Ads\Domain\InitializeCarModelsTrait;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\DomainException;
 use PHPUnit\Framework\TestCase;
@@ -13,7 +14,7 @@ use Prophecy\PhpUnit\ProphecyTrait;
 class RemoveAdServiceTest extends TestCase
 {
     use ProphecyTrait;
-    use StubCarModelsTrait;
+    use InitializeCarModelsTrait;
 
     private $adRepository;
     private RemoveAdService $service;

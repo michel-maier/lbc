@@ -1,7 +1,7 @@
 parameters:
 
 services:
-    # core application uses package by component instead package by layer, it's incompatible with autowiring
+    # core application uses package "by component" instead package "by layer", it's incompatible with autowiring
     _defaults:
         autowire: true
         autoconfigure: true
@@ -9,7 +9,41 @@ services:
     App\:
         resource: '../src/'
         exclude:
+            - '../src/Controller/'
             - '../src/Core/'
             - '../src/Kernel.php'
+            - '../src/Infrastructure/Exceptions/'
+
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: [ 'controller.service_arguments' ]
 
     # Core Services
+    App\Core\Ads\Application\FindAllAdsService:
+        arguments:
+            - '@App\Core\Ads\Infrastructure\AdRepositoryInterface'
+    App\Core\Ads\Application\GetAdService:
+        arguments:
+            - '@App\Core\Ads\Infrastructure\AdRepositoryInterface'
+    App\Core\Ads\Application\NewAdService:
+        arguments:
+            - '@App\Core\Ads\Infrastructure\AdRepositoryInterface'
+            - '@App\Core\Ads\Infrastructure\CarModelRepositoryInterface'
+    App\Core\Ads\Application\RemoveAdService:
+        arguments:
+            - '@App\Core\Ads\Infrastructure\AdRepositoryInterface'
+    App\Core\Ads\Application\UpdateAdService:
+        arguments:
+            - '@App\Core\Ads\Infrastructure\AdRepositoryInterface'
+            - '@App\Core\Ads\Infrastructure\CarModelRepositoryInterface'
+
+    #Ports as aliases
+    #Driving adapters (primary)
+    App\Core\Ads\Application\FindAllAdsServiceInterface: '@App\Core\Ads\Application\FindAllAdsService'
+    App\Core\Ads\Application\GetAdServiceInterface: '@App\Core\Ads\Application\GetAdService'
+    App\Core\Ads\Application\NewAdServiceInterface: '@App\Core\Ads\Application\NewAdService'
+    App\Core\Ads\Application\RemoveAdServiceInterface: '@App\Core\Ads\Application\RemoveAdService'
+    App\Core\Ads\Application\UpdateAdServiceInterface: '@App\Core\Ads\Application\UpdateAdService'
+    #Driven adapters (secondary)
+    App\Core\Ads\Infrastructure\AdRepositoryInterface: '@App\Infrastructure\Ads\AdRepositoryDoctrineAdapter'
+    App\Core\Ads\Infrastructure\CarModelRepositoryInterface: '@App\Infrastructure\Ads\CarModelRepositoryDoctrineAdapter'

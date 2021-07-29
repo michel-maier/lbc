@@ -18,6 +18,8 @@ install:
 #Doctrine
 db-create: up
 	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:database:create --if-not-exists
+db-schema-drop: up
+	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:schema:drop
 db-migration-diff: up
 	@docker-compose run --rm --user="${UID}:${GID}" php bin/console doctrine:migration:diff
 db-migration-migrate: up
