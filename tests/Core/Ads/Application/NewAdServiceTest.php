@@ -71,7 +71,7 @@ class NewAdServiceTest extends TestCase
             ->willReturnArgument(0);
         $this->carModelRepository
             ->findAll()
-            ->willReturn(iterator_to_array($this->getCarModels()));
+            ->willReturn(iterator_to_array($this->buildCarModels()));
 
         $result = ($this->service)($req);
 
@@ -96,7 +96,7 @@ class NewAdServiceTest extends TestCase
             ->willReturnArgument(0);
         $this->carModelRepository
             ->findAll()
-            ->willReturn(iterator_to_array($this->getCarModels()));
+            ->willReturn(iterator_to_array($this->buildCarModels()));
 
         $this->expectExceptionObject(new DomainException('"309" does not match any model'));
 
