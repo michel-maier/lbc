@@ -2,9 +2,9 @@
 
 namespace App\Core;
 
-trait EntityIdTrait
+abstract class AggregateRootId
 {
-    private string $id;
+    protected string $id;
 
     public function __construct(?string $id = null)
     {

@@ -14,6 +14,8 @@ abstract class Ad
     const AUTOMOBILE_TYPE = 'automobile';
     const ALL_TYPES = [self::JOB_TYPE, self::REAL_ESTATE_TYPE, self::AUTOMOBILE_TYPE];
 
+    const MAX_POSITION_RESEARCH = 99;
+
     private AdId $id;
     private string $title;
     private string $content;
@@ -51,14 +53,23 @@ abstract class Ad
 
     private static function searchModel(string $search, CarModelRepositoryInterface $carModelRepository): CarModel
     {
-        foreach(self::sortCarModelsByLengthName($carModelRepository->findAll()) as $model)
+        $found = null;
+        $w = CarModel::MAX_POSITION_RESEARCH;
+        $l = 0;
+        foreach($carModelRepository->findAll() as $model)
         {
-            if ($model->isMatchingTheSearchString($search)) {
-                return $model;
-            }
+            [$cw, $cl] = $model->matchingTheSearchString($search);
+            $isFound = $cw !== CarModel::MAX_POSITION_RESEARCH;
+            $isMoreAtLeft = $cw < $w;
+            $hasSameLength = $cw === $w;
+            $modelNameIsLargest =  $cl > $l;
+
+            (($isFound && $isMoreAtLeft) || ($hasSameLength && $modelNameIsLargest)) && ($found = $model) && ($w = $cw);
         }
 
-        throw new DomainException(sprintf('"%s" does not match any model', $search));
+        (CarModel::MAX_POSITION_RESEARCH === $w) && throw new DomainException(sprintf('"%s" does not match any model', $search));
+
+        return $found;
     }
 
     private static function sortCarModelsByLengthName($models): array

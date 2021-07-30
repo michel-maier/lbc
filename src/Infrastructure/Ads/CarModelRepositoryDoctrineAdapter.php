@@ -7,7 +7,7 @@ use App\Core\Ads\Domain\CarModelId;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Infrastructure\Exceptions as Infrastructure;
+use App\Core as Core;
 use Doctrine\ORM\EntityRepository;
 
 class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
@@ -25,7 +25,7 @@ class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
         $carModel = $this->repository->find($id);
 
         if (null === $carModel) {
-            throw new Infrastructure\NotFoundException();
+            throw new Core\NotFoundException();
         }
 
         return $carModel;
@@ -44,7 +44,7 @@ class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
 
             return $carModel;
         } catch (UniqueConstraintViolationException $e) {
-            throw new Infrastructure\UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e);
+            throw new Core\UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

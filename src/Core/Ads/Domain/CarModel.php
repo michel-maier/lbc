@@ -4,6 +4,8 @@ namespace App\Core\Ads\Domain;
 
 class CarModel
 {
+    const MAX_POSITION_RESEARCH = 99;
+
     private CarModelId $id;
     private string $name;
     private string $manufacturer;
@@ -30,13 +32,17 @@ class CarModel
         return $this->manufacturer;
     }
 
-    public function isMatchingTheSearchString(string $search): bool
+    /**
+     * Return strpos of the research, the length is not the only good Heuristic...
+     * @return array  [ position in the name, length of the model]
+     */
+    public function matchingTheSearchString(string $search): array
     {
-        if (str_contains($this->sanitize($search), $this->sanitize($this->name))) {
-            return true;
+        if (str_contains($s = $this->sanitize($search), $n = $this->sanitize($this->name))) {
+            return [strpos($s, $n), strlen($n)];
         }
 
-        return false;
+        return [self::MAX_POSITION_RESEARCH, 0];
     }
 
     private function sanitize(string $subject): string

@@ -2,12 +2,12 @@
 
 namespace App\Tests\Functional\Ads;
 
-use App\Tests\Functional\AdToolTrait;
+use App\Tests\Functional\FunctionalToolTrait;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;;
 
 class DeleteTest extends WebTestCase
 {
-    use AdToolTrait;
+    use FunctionalToolTrait;
 
     public function testIShouldDeleteAd(): void
     {

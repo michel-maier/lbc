@@ -45,12 +45,12 @@ class NewAdServiceTest extends TestCase
 
         //Assert
         $this->assertInstanceOf(DefaultAdResponse::class, $result);
-        $this->assertNotNull($result->getId());
-        $this->assertEquals($result->getTitle(), $result->getTitle());
-        $this->assertEquals($result->getContent(), $result->getContent());
-        $this->assertEquals($result->getType(), $result->getType());
-        $this->assertNull($result->getModel());
-        $this->assertNull($result->getManufacturer());
+        $this->assertNotNull($expected->getId());
+        $this->assertEquals($expected->getTitle(), $result->getTitle());
+        $this->assertEquals($expected->getContent(), $result->getContent());
+        $this->assertEquals($expected->getType(), $result->getType());
+        $this->assertNull($expected->getModel());
+        $this->assertNull($expected->getManufacturer());
     }
 
     public function provideAdCreationRequest(): array
@@ -63,7 +63,7 @@ class NewAdServiceTest extends TestCase
     /**
      * @dataProvider provideAdCreationRequestForAutomobile
      */
-    public function testIShouldCreateAutomobileAdThenDeduceModelAndManufacturer(string $search, $manufacturer, $model): void
+    public function testIShouldCreateAutomobileAdThenDeduceModelAndManufacturer(string $search, string $manufacturer, string $model): void
     {
         $req = new NewAdRequest('title', 'content', Ad::AUTOMOBILE_TYPE, $search);
         $this->adRepository
@@ -75,8 +75,8 @@ class NewAdServiceTest extends TestCase
 
         $result = ($this->service)($req);
 
-        $this->assertEquals($result->getModel(), $model);
-        $this->assertEquals($result->getManufacturer(), $manufacturer);
+        $this->assertEquals($model, $result->getModel());
+        $this->assertEquals($manufacturer, $result->getManufacturer());
     }
 
     public function provideAdCreationRequestForAutomobile(): array

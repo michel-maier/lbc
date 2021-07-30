@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class SmokeTest extends WebTestCase
 {
-    use AdToolTrait;
+    use FunctionalToolTrait;
 
     /**
      * @dataProvider urlProvider

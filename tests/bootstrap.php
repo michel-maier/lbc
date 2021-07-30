@@ -52,6 +52,7 @@ $application->run(new Symfony\Component\Console\Input\ArrayInput([
 
 $application->run(new Symfony\Component\Console\Input\ArrayInput([
     'command' => 'doctrine:fixtures:load',
+    '--append' => 1,
     '--no-interaction' => '1',
 ]));
 

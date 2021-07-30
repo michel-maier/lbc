@@ -7,7 +7,7 @@ use App\Core\Ads\Domain\AdId;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Infrastructure\Exceptions as Infrastructure;
+use App\Core as Core;
 use Doctrine\ORM\EntityRepository;
 
 class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
@@ -25,7 +25,7 @@ class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
         $ad = $this->repository->find($id);
 
         if (null === $ad) {
-            throw new Infrastructure\NotFoundException();
+            throw new Core\NotFoundException();
         }
 
         return $ad;
@@ -44,7 +44,7 @@ class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
 
             return $ad;
         } catch (UniqueConstraintViolationException $e) {
-            throw new Infrastructure\UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e);
+            throw new Core\UniqueConstraintViolationException($e->getMessage(), $e->getCode(), $e);
         }
     }
 

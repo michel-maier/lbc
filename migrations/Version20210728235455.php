@@ -23,7 +23,7 @@ final class Version20210728235455 extends AbstractMigration
     {
         $models = iterator_to_array($this->buildCarModels());
         foreach ($models as $m) {
-            $this->addSql(sprintf('insert into ads_car_model (id_id, name, manufacturer) values (\'%s\', \'%s\', \'%s\');', $m->getId(), $m->getName(), $m->getManufacturer()));
+            $this->addSql(sprintf('insert into ads_car_model (id_id, name, manufacturer) values (\'%s\', \'%s\', \'%s\')', $m->getId(), $m->getName(), $m->getManufacturer()));
         }
     }
 

@@ -1,5 +1,7 @@
 <doctrine-mapping>
     <embeddable name="App\Core\Ads\Domain\AdId">
-        <id name="id" type="uuid" />
+        <id name="id" type="ad_id">
+            <generator strategy="NONE" />
+        </id>
     </embeddable>
 </doctrine-mapping>

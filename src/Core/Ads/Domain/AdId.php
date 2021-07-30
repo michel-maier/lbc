@@ -3,9 +3,8 @@
 
 namespace App\Core\Ads\Domain;
 
-use App\Core\EntityIdTrait;
+use App\Core\AggregateRootId;
 
-class AdId
+class AdId extends AggregateRootId
 {
-    use EntityIdTrait;
 }
