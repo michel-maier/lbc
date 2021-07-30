@@ -12,6 +12,8 @@ stop:
 	docker-compose stop
 down:
 	docker-compose down
+logs:
+	docker-compose logs
 
 init: up db-drop db-create db-migration-migrate db-fixtures
 
@@ -47,6 +49,8 @@ server-prod: up
 test: test-core test-algorithm test-func
 test-core:
 	@docker-compose run --rm --user="${UID}:${GID}" php simple-phpunit tests/Core
+test-core-coverage:
+	 @docker-compose run --rm --user="${UID}:${GID}" php php -dxdebug.mode=coverage /.composer/vendor/bin/simple-phpunit tests/Core --coverage-html ./reports
 test-algorithm:
 	@docker-compose run --rm --user="${UID}:${GID}" php simple-phpunit tests/Unit
 test-func: up
