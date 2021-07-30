@@ -4,6 +4,7 @@ namespace App\Tests\Core\Ads\Application;
 
 use App\Core\Ads\Application\DefaultAdResponse;
 use App\Core\Ads\Application\GetAdService;
+use App\Core\Ads\Domain\AutomobileAd;
 use App\Core\Ads\Domain\InitializeCarModelsTrait;
 use App\Core\Ads\Domain\JobAd;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
@@ -40,6 +41,23 @@ class GetAdServiceTest extends TestCase
         $this->assertEquals($ad->getTitle(), $result->getTitle());
         $this->assertEquals($ad->getContent(), $result->getContent());
         $this->assertEquals($ad->getType(), $result->getType());
+    }
+
+    public function testIShouldGetAutomobileAd()
+    {
+        $ad = new AutomobileAd('title', 'content', 'Clio estate', 'Renault');
+        $this->adRepository
+            ->get(Argument::any())
+            ->willReturn($ad);
+
+        $result = ($this->service)('123e4567-e89b-12d3-a456-426614174000');
+
+        $this->assertInstanceOf(DefaultAdResponse::class, $result);
+        $this->assertEquals($ad->getTitle(), $result->getTitle());
+        $this->assertEquals($ad->getContent(), $result->getContent());
+        $this->assertEquals($ad->getType(), $result->getType());
+        $this->assertEquals($ad->getModel(), $result->getModel());
+        $this->assertEquals($ad->getManufacturer(), $result->getManufacturer());
     }
 
     public function testIShouldGetAnErrorOnTryingToGetAnAddWithAnMalformedUuid()

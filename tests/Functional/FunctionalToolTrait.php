@@ -61,7 +61,7 @@ JSON;
     {
         return <<<JSON
 {
-    "message": "Resource not founded"
+    "message": "Resource not found"
 }
 JSON;
     }

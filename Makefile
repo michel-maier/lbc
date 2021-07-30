@@ -45,7 +45,6 @@ server-prod: up
 
 #Test
 test: test-core test-algorithm test-func
-
 test-core:
 	@docker-compose run --rm --user="${UID}:${GID}" php simple-phpunit tests/Core
 test-algorithm:
@@ -54,7 +53,9 @@ test-func: up
 	@docker-compose run --rm -e INIT_DB=1 --user="${UID}:${GID}" php simple-phpunit tests/Functional
 
 phpcs:
-	@docker-compose run --rm --user="${UID}:${GID}" php php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose || return 0
+	@docker-compose run --rm --user="${UID}:${GID}" php php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --verbose || return 0
+phpcs-fix:
+	@docker-compose run --rm --user="${UID}:${GID}" php php-cs-fixer fix --config=.php-cs-fixer.dist.php --verbose
 phpstan:
 	@docker-compose run --rm --user="${UID}:${GID}" php phpstan analyse -l 0 src tests || return 0
 

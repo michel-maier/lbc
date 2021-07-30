@@ -3,6 +3,7 @@
 namespace App\Controller\Ads;
 
 use App\Controller\JsonApiRequestCoreAdapter;
+use App\Core\Ads\Application\AdListResponse;
 use App\Core\Ads\Application\DefaultAdResponse;
 use App\Core\Ads\Application\FindAllAdsServiceInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,7 +19,7 @@ class FindAll
             $request,
             $service,
             [
-            JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class,
+            JsonApiRequestCoreAdapter::DTO_RESPONSE => AdListResponse::class,
         ]
         );
     }

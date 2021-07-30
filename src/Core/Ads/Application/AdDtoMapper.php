@@ -19,11 +19,21 @@ class AdDtoMapper
         );
     }
 
-    public function toDefaultCollection(array $collection): array
+    public function toListed(Ad $ad): AdListResponse
+    {
+        return new AdListResponse(
+            $ad->getId(),
+            $ad->getTitle(),
+            $ad->getContent(),
+            $ad->getType()
+        );
+    }
+
+    public function toCollection(array $collection): array
     {
         $dtos = [];
         while ($ad = array_pop($collection)) {
-            $dtos[] = $this->toDefault($ad);
+            $dtos[] = $this->toListed($ad);
         }
 
         return $dtos;

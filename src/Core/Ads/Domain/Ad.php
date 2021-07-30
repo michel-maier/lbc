@@ -14,8 +14,6 @@ abstract class Ad
     const AUTOMOBILE_TYPE = 'automobile';
     const ALL_TYPES = [self::JOB_TYPE, self::REAL_ESTATE_TYPE, self::AUTOMOBILE_TYPE];
 
-    const MAX_POSITION_RESEARCH = 99;
-
     private AdId $id;
     private string $title;
     private string $content;
@@ -40,6 +38,9 @@ abstract class Ad
 
     public static function createFromNewAutomobileRequest(NewAdRequest $request, CarModelRepositoryInterface $carModelRepository): self
     {
+        if (null === $request->getModel()) {
+            throw new DomainException('For automobile ad, "model" field is mandatory');
+        }
         $model = self::searchModel($request->getModel(), $carModelRepository);
 
         return new AutomobileAd($request->getTitle(), $request->getContent(), $model->getName(), $model->getManufacturer());

@@ -12,7 +12,6 @@ services:
             - '../src/Controller/'
             - '../src/Core/'
             - '../src/Kernel.php'
-            - '../src/Infrastructure/Exceptions/'
 
     App\Controller\:
         resource: '../src/Controller'

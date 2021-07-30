@@ -15,6 +15,6 @@ class FindAllAdsService implements FindAllAdsServiceInterface
 
     public function __invoke(): array
     {
-        return (new AdDtoMapper())->toDefaultCollection($this->adRepository->findAll());
+        return (new AdDtoMapper())->toCollection($this->adRepository->findAll());
     }
 }
