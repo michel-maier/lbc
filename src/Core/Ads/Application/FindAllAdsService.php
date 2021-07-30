@@ -2,7 +2,6 @@
 
 namespace App\Core\Ads\Application;
 
-use App\Core\Ads\Domain\AdId;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 
 class FindAllAdsService implements FindAllAdsServiceInterface

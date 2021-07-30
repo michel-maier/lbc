@@ -16,9 +16,11 @@ class Get
     {
         return (new JsonApiRequestCoreAdapter())(
             $request,
-            $service, [
+            $service,
+            [
             JsonApiRequestCoreAdapter::URI_VARS => ['id'],
-            JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class
-        ]);
+            JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class,
+        ]
+        );
     }
 }

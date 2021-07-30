@@ -3,7 +3,7 @@
 namespace App\Tests\Functional\Ads;
 
 use App\Tests\Functional\FunctionalToolTrait;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class DeleteTest extends WebTestCase
 {

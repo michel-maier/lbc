@@ -34,7 +34,8 @@ class CarModel
 
     /**
      * Return strpos of the research, the length is not the only good Heuristic...
-     * @return array  [ position in the name, length of the model]
+     *
+     * @return array [ position in the name, length of the model]
      */
     public function matchingTheSearchString(string $search): array
     {

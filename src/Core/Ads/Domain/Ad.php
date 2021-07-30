@@ -56,13 +56,12 @@ abstract class Ad
         $found = null;
         $w = CarModel::MAX_POSITION_RESEARCH;
         $l = 0;
-        foreach($carModelRepository->findAll() as $model)
-        {
+        foreach ($carModelRepository->findAll() as $model) {
             [$cw, $cl] = $model->matchingTheSearchString($search);
-            $isFound = $cw !== CarModel::MAX_POSITION_RESEARCH;
+            $isFound = CarModel::MAX_POSITION_RESEARCH !== $cw;
             $isMoreAtLeft = $cw < $w;
             $hasSameLength = $cw === $w;
-            $modelNameIsLargest =  $cl > $l;
+            $modelNameIsLargest = $cl > $l;
 
             (($isFound && $isMoreAtLeft) || ($hasSameLength && $modelNameIsLargest)) && ($found = $model) && ($w = $cw);
         }

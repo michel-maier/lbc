@@ -12,7 +12,7 @@ class SmokeTest extends WebTestCase
     /**
      * @dataProvider urlProvider
      */
-    public function testPageIsSuccessful(string $method, Callable $uri, string $content = null): void
+    public function testPageIsSuccessful(string $method, callable $uri, string $content = null): void
     {
         $client = self::createClient();
         $client->request($method, $uri(), [], [], [], $content);
@@ -22,10 +22,10 @@ class SmokeTest extends WebTestCase
 
     public function urlProvider(): iterator
     {
-        yield '[0] - [GET] /api/ads/{id}' => ['GET', fn() =>  sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId())];
-        yield '[1] - [GET] /api/ads' => ['GET', fn() => '/api/ads'];
-        yield '[2] - [POST] /api/ads' => ['POST', fn() => '/api/ads', $this->adCreationInput()];
-        yield '[3] - [PATCH] /api/ads/{id}' => ['PATCH', fn() => sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId()), $this->adUpdateInput()];
-        yield '[4] - [DELETE] /api/ads/{id}' => ['DELETE', fn() => sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId())];
+        yield '[0] - [GET] /api/ads/{id}' => ['GET', fn () => sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId())];
+        yield '[1] - [GET] /api/ads' => ['GET', fn () => '/api/ads'];
+        yield '[2] - [POST] /api/ads' => ['POST', fn () => '/api/ads', $this->adCreationInput()];
+        yield '[3] - [PATCH] /api/ads/{id}' => ['PATCH', fn () => sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId()), $this->adUpdateInput()];
+        yield '[4] - [DELETE] /api/ads/{id}' => ['DELETE', fn () => sprintf('/api/ads/%s', $this->findOneAdByTitle('Php Developer')->getId())];
     }
 }

@@ -17,10 +17,12 @@ class Update
     {
         return (new JsonApiRequestCoreAdapter())(
             $request,
-            $service, [
+            $service,
+            [
             JsonApiRequestCoreAdapter::URI_VARS => ['id'],
             JsonApiRequestCoreAdapter::DTO_REQUEST => UpdateAdRequest::class,
             JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class,
-        ]);
+        ]
+        );
     }
 }

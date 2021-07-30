@@ -18,10 +18,12 @@ class Create
     {
         return (new JsonApiRequestCoreAdapter())(
             $request,
-            $service, [
+            $service,
+            [
             JsonApiRequestCoreAdapter::DTO_REQUEST => NewAdRequest::class,
             JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class,
             JsonApiRequestCoreAdapter::RESPONSE_STATUS => Response::HTTP_CREATED,
-        ]);
+        ]
+        );
     }
 }

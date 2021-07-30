@@ -5,9 +5,9 @@ namespace App\Infrastructure\Ads;
 use App\Core\Ads\Domain\Ad;
 use App\Core\Ads\Domain\AdId;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
+use App\Core as Core;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Core as Core;
 use Doctrine\ORM\EntityRepository;
 
 class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
@@ -20,6 +20,7 @@ class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
         $this->repository = $entityManager->getRepository(Ad::class);
         $this->entityManager = $entityManager;
     }
+
     public function get(AdId $id): Ad
     {
         $ad = $this->repository->find($id);
@@ -56,6 +57,6 @@ class AdRepositoryDoctrineAdapter implements AdRepositoryInterface
 
     public function findAll(): array
     {
-       return $this->repository->findAll();
+        return $this->repository->findAll();
     }
 }

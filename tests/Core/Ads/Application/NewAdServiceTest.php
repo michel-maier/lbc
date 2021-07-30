@@ -11,8 +11,8 @@ use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use App\Core\DomainException;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class NewAdServiceTest extends TestCase
 {
@@ -60,6 +60,7 @@ class NewAdServiceTest extends TestCase
             '1 - I should create RealEstateAd' => [new NewAdRequest('real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE), new DefaultAdResponse('id', 'real estate title', 'real estate content', Ad::REAL_ESTATE_TYPE)],
         ];
     }
+
     /**
      * @dataProvider provideAdCreationRequestForAutomobile
      */

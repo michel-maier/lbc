@@ -23,7 +23,7 @@ class JsonApiRequestCoreAdapter
         $this->serializer = new Serializer([new ObjectNormalizer()], [new JsonEncoder()]);
     }
 
-    public function __invoke(Request $request, Callable $service, array $options): JsonResponse
+    public function __invoke(Request $request, callable $service, array $options): JsonResponse
     {
         $options += [
             self::URI_VARS => [],
@@ -45,7 +45,7 @@ class JsonApiRequestCoreAdapter
         }
 
         if ($options[self::DTO_REQUEST]) {
-            $data = $this->serializer->deserialize($request->getContent(), $options[self::DTO_REQUEST], JsonEncoder::FORMAT , [ObjectNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS => [$options[self::DTO_REQUEST] => $data]]);
+            $data = $this->serializer->deserialize($request->getContent(), $options[self::DTO_REQUEST], JsonEncoder::FORMAT, [ObjectNormalizer::DEFAULT_CONSTRUCTOR_ARGUMENTS => [$options[self::DTO_REQUEST] => $data]]);
         } elseif (1 === count($data)) {
             $data = array_pop($data);
         }

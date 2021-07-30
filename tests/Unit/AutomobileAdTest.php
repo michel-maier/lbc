@@ -7,28 +7,31 @@ use App\Core\Ads\Domain\AutomobileAd;
 use App\Core\Ads\Domain\InitializeCarModelsTrait;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use PHPUnit\Framework\TestCase;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class AutomobileAdTest extends TestCase
 {
+    use ProphecyTrait;
     use InitializeCarModelsTrait;
 
     /**
      * @dataProvider  provideSearch
      */
     public function testSearchCarModelAlgorithm(string $search, string $manufacturer, string $model)
-   {
-       $carModelRepository = $this->prophesize(CarModelRepositoryInterface::class);
-       $carModelRepository
+    {
+        $carModelRepository = $this->prophesize(CarModelRepositoryInterface::class);
+        $carModelRepository
            ->findAll()
            ->willReturn(iterator_to_array($this->buildCarModels()));
 
-       $ad = AutomobileAd::createFromNewAutomobileRequest(
-           new NewAdRequest('title', 'content', 'automobile', $search),
-           $carModelRepository->reveal());
+        $ad = AutomobileAd::createFromNewAutomobileRequest(
+            new NewAdRequest('title', 'content', 'automobile', $search),
+            $carModelRepository->reveal()
+        );
 
-       $this->assertEquals( $model, $ad->getModel());
-       $this->assertEquals( $manufacturer, $ad->getManufacturer());
-   }
+        $this->assertEquals($model, $ad->getModel());
+        $this->assertEquals($manufacturer, $ad->getManufacturer());
+    }
 
     public function provideSearch(): array
     {

@@ -14,8 +14,8 @@ use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 use App\Core\DomainException;
 use PHPUnit\Framework\TestCase;
-use Prophecy\PhpUnit\ProphecyTrait;
 use Prophecy\Argument;
+use Prophecy\PhpUnit\ProphecyTrait;
 
 class UpdateAdServiceTest extends TestCase
 {
@@ -52,7 +52,7 @@ class UpdateAdServiceTest extends TestCase
         //Assert
         $this->assertInstanceOf(DefaultAdResponse::class, $result);
         $this->assertNotNull($expected->getId());
-        $this->assertEquals($expected->getTitle(), $result->getTitle(),);
+        $this->assertEquals($expected->getTitle(), $result->getTitle(), );
         $this->assertEquals($expected->getContent(), $result->getContent(), );
         $this->assertNull($result->getModel());
         $this->assertNull($result->getManufacturer());
@@ -64,12 +64,12 @@ class UpdateAdServiceTest extends TestCase
             '0 - I should update JobAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content'),
                 new JobAd('to change', 'to change'),
-                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content', Ad::JOB_TYPE)
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new job title', 'new job content', Ad::JOB_TYPE),
             ],
             '1 - I should update RealEstateAd' => [
                 new UpdateAdRequest('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content'),
                 new RealEstateAd('to change', 'to change'),
-                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content', Ad::REAL_ESTATE_TYPE)
+                new DefaultAdResponse('123e4567-e89b-12d3-a456-426614174000', 'new real estate title', 'new real estate content', Ad::REAL_ESTATE_TYPE),
             ],
         ];
     }

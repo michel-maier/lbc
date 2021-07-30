@@ -3,7 +3,6 @@
 namespace App\Core\Ads\Application;
 
 use App\Core\Ads\Domain\Ad;
-use App\Core\Ads\Domain\AutomobileAd;
 use App\Core\Ads\Infrastructure\AdRepositoryInterface;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
 

@@ -34,7 +34,7 @@ class FindAllAdsServiceTest extends TestCase
 
         $result = ($this->service)();
 
-        $this->assertIsArray( $result);
+        $this->assertIsArray($result);
         $this->assertCount(2, $result);
     }
 }

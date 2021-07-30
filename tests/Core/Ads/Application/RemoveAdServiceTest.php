@@ -45,6 +45,6 @@ class RemoveAdServiceTest extends TestCase
         $uuid = '1234';
         $this->expectExceptionObject(new DomainException('"1234" is not a valid uuid'));
 
-       ($this->service)($uuid);
+        ($this->service)($uuid);
     }
 }

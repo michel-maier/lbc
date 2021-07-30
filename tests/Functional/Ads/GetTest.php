@@ -3,7 +3,7 @@
 namespace App\Tests\Functional\Ads;
 
 use App\Tests\Functional\FunctionalToolTrait;
-use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;;
+use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
 class GetTest extends WebTestCase
 {
@@ -22,7 +22,7 @@ class GetTest extends WebTestCase
         $this->assertEquals(200, $response->getStatusCode());
     }
 
-    public function testIShouldGetA404ResponseOnUnknown() : void
+    public function testIShouldGetA404ResponseOnUnknown(): void
     {
         $client = static::createClient();
         $uri = '/api/ads/123e4567-e89b-12d3-a456-426614174000';

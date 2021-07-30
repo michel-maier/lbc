@@ -2,7 +2,6 @@
 
 namespace App\Core\Ads\Domain;
 
-
 class AutomobileAd extends Ad
 {
     private string $model;

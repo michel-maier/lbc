@@ -16,9 +16,11 @@ class Delete
     {
         return (new JsonApiRequestCoreAdapter())(
             $request,
-            $service, [
+            $service,
+            [
             JsonApiRequestCoreAdapter::URI_VARS => ['id'],
-            JsonApiRequestCoreAdapter::RESPONSE_STATUS => Response::HTTP_NO_CONTENT
-        ]);
+            JsonApiRequestCoreAdapter::RESPONSE_STATUS => Response::HTTP_NO_CONTENT,
+        ]
+        );
     }
 }

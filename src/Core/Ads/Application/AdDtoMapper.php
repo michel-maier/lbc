@@ -22,7 +22,7 @@ class AdDtoMapper
     public function toDefaultCollection(array $collection): array
     {
         $dtos = [];
-        while($ad = array_pop($collection)) {
+        while ($ad = array_pop($collection)) {
             $dtos[] = $this->toDefault($ad);
         }
 

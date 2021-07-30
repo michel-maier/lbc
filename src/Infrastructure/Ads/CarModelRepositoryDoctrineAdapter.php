@@ -5,9 +5,9 @@ namespace App\Infrastructure\Ads;
 use App\Core\Ads\Domain\CarModel;
 use App\Core\Ads\Domain\CarModelId;
 use App\Core\Ads\Infrastructure\CarModelRepositoryInterface;
+use App\Core as Core;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Core as Core;
 use Doctrine\ORM\EntityRepository;
 
 class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
@@ -20,6 +20,7 @@ class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
         $this->repository = $entityManager->getRepository(CarModel::class);
         $this->entityManager = $entityManager;
     }
+
     public function get(CarModelId $id): CarModel
     {
         $carModel = $this->repository->find($id);
@@ -56,6 +57,6 @@ class CarModelRepositoryDoctrineAdapter implements CarModelRepositoryInterface
 
     public function findAll(): array
     {
-       return $this->repository->findAll();
+        return $this->repository->findAll();
     }
 }

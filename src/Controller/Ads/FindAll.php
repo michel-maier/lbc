@@ -16,8 +16,10 @@ class FindAll
     {
         return (new JsonApiRequestCoreAdapter())(
             $request,
-            $service, [
-            JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class
-        ]);
+            $service,
+            [
+            JsonApiRequestCoreAdapter::DTO_RESPONSE => DefaultAdResponse::class,
+        ]
+        );
     }
 }

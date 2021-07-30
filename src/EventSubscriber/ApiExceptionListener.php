@@ -23,7 +23,7 @@ final class ApiExceptionListener implements EventSubscriberInterface
     public function translateException(ExceptionEvent $event): void
     {
         $exception = $event->getThrowable();
-        var_dump($exception);
+
         if ($exception instanceof DomainException || $exception instanceof InfrastructureException) {
             $event->setResponse(new JsonResponse(['message' => $exception->getMessage()], $exception->getCode()));
         }

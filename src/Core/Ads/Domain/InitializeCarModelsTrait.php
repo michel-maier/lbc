@@ -6,7 +6,6 @@ use Iterator;
 
 trait InitializeCarModelsTrait
 {
-
     private function buildCarModels(): Iterator
     {
         foreach (['Cabriolet', 'Q2', 'Q3', 'Q5', 'Q7', 'Q8', 'R8', 'Rs3', 'Rs4', 'Rs5', 'Rs7', 'S3', 'S4', 'S4 Avant', 'S4 Cabriolet', 'S5', 'S7', 'S8', 'SQ5', 'SQ7', 'Tt', 'Tts', 'V8'] as $model) {

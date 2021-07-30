@@ -15,9 +15,9 @@ trait FunctionalToolTrait
             ->findOneBy(['title' => $title]);
     }
 
-    private function adCreationInput():string
+    private function adCreationInput(): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "title": "Smoke test case",
     "content": "Content",
@@ -26,9 +26,9 @@ trait FunctionalToolTrait
 JSON;
     }
 
-    private function automobileAdCreationInput(string $search):string
+    private function automobileAdCreationInput(string $search): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "title": "My car",
     "content": "Super car",
@@ -40,7 +40,7 @@ JSON;
 
     private function missingRequiredAdCreationInput(): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "content": "Content",
     "type": "job"
@@ -50,7 +50,7 @@ JSON;
 
     private function adUpdateInput(): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "title": "Update title"
 }
@@ -59,26 +59,24 @@ JSON;
 
     private function json404(): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "message": "Resource not founded"
 }
 JSON;
     }
+
     private function missingMandatoriesAd400(): string
     {
-        return  <<<JSON
+        return <<<JSON
 {
     "message": "Missing some mandatories"
 }
 JSON;
     }
 
-
     private function jsonToObject(string $json): object
     {
         return (object) json_decode($json);
     }
-
-
 }
